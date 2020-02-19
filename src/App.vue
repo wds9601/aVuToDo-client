@@ -1,20 +1,27 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <Landing />
+    <nav>
+      <router-link to="/">Landing Page |</router-link>
+      <router-link to="/portal"> Portal Page |</router-link>
+      <router-link to="/slideshow"> Slideshow |</router-link>
+    </nav>
+    
+    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+    <!-- <Landing /> -->
+    <router-view />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import Landing from './components/Landing.vue'
+// import HelloWorld from './components/HelloWorld.vue'
+// import Landing from './components/Landing.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
-    Landing
+    // HelloWorld,
+    // Landing
   }
 }
 </script>
