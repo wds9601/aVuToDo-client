@@ -83,7 +83,7 @@ export default {
             show: true
         }
     },
-    props: [ "getToken" ],
+    // props: [ "getToken" ],
     methods: {
         Signup(e) {
             e.preventDefault()
@@ -97,21 +97,19 @@ export default {
                 verifyPassword: this.form.verifyPassword
             }
 
-            console.log('This is newUser object', newUser)
+            console.log('This is newUser form object sent to auth:', newUser)
             // // console.log('This is the URL', process.env.VUE_APP_SERVER_URL)
             this.axios.post(process.env.VUE_APP_SERVER_URL + '/auth/signup', newUser) 
             .then(response => {
-                localStorage.setItem('userToken', response.data.token),
-                this.getToken(response.data),
-                console.log('SUCCESS in POST user creation', response.data),
-                this.$router.push('/profile')
+                localStorage.setItem('userToken', response.data.token)
+                let decode = this.$jwt.decode(response.data.token)
+                console.log('DECODED SIGNUP TOKEN:', decode)
+                console.log('SUCCESS in POST /auth/signup, response.data', response.data)
+                this.$router.push(`/profile/${decode._id}`)
             })
             .catch(err => {
-                console.log('Error in POST user creation', err)
-            })
-            
-                
-                
+                console.log('Error in POST /auth/signup', err)
+            })     
         },
         onReset(evt) {
             evt.preventDefault()

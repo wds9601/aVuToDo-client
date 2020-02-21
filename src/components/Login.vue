@@ -49,15 +49,18 @@ export default {
                 password: this.form.password
             }
 
-            console.log(user)
+            console.log('This is the user object being sent to /auth/login', user)
             // // console.log('This is the URL', process.env.VUE_APP_SERVER_URL)
-            this.axios.post(process.env.VUE_APP_SERVER_URL + '/auth/login', user)
-            .then(response => (
-                localStorage.setItem('userToken', response.data.token),
-                this.getToken(response.data),
-                console.log('SUCCESS in POST user creation', response.data),
-                this.$router.push('/profile')
-            ))
+            this.axios.post(`${process.env.VUE_APP_SERVER_URL}/auth/login`, user)
+            .then(response => {
+                localStorage.setItem('userToken', response.data.token)
+                // this.getToken(response.data),
+                console.log('This is being sent to jwt-decode', response.data.token)
+                let decode = this.$jwt.decode(response.data.token)
+                console.log('This is DECODE, from Login 59.  Looking to get decode._id for router', decode)
+                console.log('SUCCESS in POST /auth/login. this is response.data Login 58', response.data),
+                this.$router.push(`/profile/${decode._id}`)
+            })
             .catch(err => {
                 console.log('Error in POST user creation', err)
             })

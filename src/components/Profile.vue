@@ -1,8 +1,8 @@
 <template>
     <div>
         <div v-if="user">
-            <h1>user Profile content goes here</h1>
-            <h2>Add Link to Journal Entries</h2>
+            <h3>User Profile content here</h3>
+            <h3>All Posts:</h3>
             <ul class="posts">
                 <li 
                 is="post" 
@@ -19,7 +19,7 @@
 
         <div class="post-form">
             <h2>Add a new Journal Entry</h2>
-            <b-form @submit.prevent="createPost()">
+            <b-form autocomplete=off @submit.prevent="createPost()">
                 <b-form-group id="input-group-1" label="Title:" label-for="title">
                     <b-form-input
                         id="title"
@@ -75,18 +75,17 @@ export default {
     props: {
         // user: this.user
     },
-    created: function() {
+    mounted: function() {
         this.getUserPosts()
-    }, 
-    // // props: ["getToken()"],
+    },
     methods: {
         getUserPosts() {
-            // let token = localStorage.getItem('userToken')
-            let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTRlZWE4N2M4ODRmNzYyMzQxZjQyNTMiLCJmaXJzdG5hbWUiOiJiIiwibGFzdG5hbWUiOiJiIiwidXNlcm5hbWUiOiJiYmIiLCJlbWFpbCI6ImJAYi5jb20iLCJpYXQiOjE1ODIyMzAxNTEsImV4cCI6MTU4MjI1ODk1MX0.ZAhAoH3T7eP9JIYEC03pUuVI0LMro4Qm3iWa4SGARLc"
-            console.log('This is the token before axios GET /posts:', token)
+            console.log(localStorage)
+            let token = localStorage.getItem('userToken')
+            console.log('This is the token before axios GET /posts:', {token: token})
             axios.get(`${process.env.VUE_APP_SERVER_URL}/posts`, {
                 headers: {
-                    'Content-type': 'application/json',
+                    'Content-type': 'application/x-www-form-urlencoded',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -99,8 +98,7 @@ export default {
             })
         },
         createPost() {
-            // let token = localStorage.getItem('userToken')
-            let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTRlZWE4N2M4ODRmNzYyMzQxZjQyNTMiLCJmaXJzdG5hbWUiOiJiIiwibGFzdG5hbWUiOiJiIiwidXNlcm5hbWUiOiJiYmIiLCJlbWFpbCI6ImJAYi5jb20iLCJpYXQiOjE1ODIyMzAxNTEsImV4cCI6MTU4MjI1ODk1MX0.ZAhAoH3T7eP9JIYEC03pUuVI0LMro4Qm3iWa4SGARLc"
+            let token = localStorage.getItem('userToken')
             console.log('This is the token before axios POST/posts:', token)
             console.log('FORM', this.form)
             axios.post(`${process.env.VUE_APP_SERVER_URL}/posts`, {
@@ -110,20 +108,21 @@ export default {
                     content: this.form.content,
                 },
                 headers: {
-                    'Content-type': 'application/x-www-form-urlencoded',
-                    'Authorization': `Bearer ${token}`
+                    'Content-type': 'application/json',
+                    // 'Authorization': `Bearer ${token}`
                 }
             })
             .then(response => {
-                console.log(response)
-                // this.posts = response.data
+                console.log('This is response from post db entry', response)
+                
             })
             .catch(err => {
                 console.log('Error in POST /posts:', err)
             })
+            this.getUserPosts()
         },
-        deletePost(key) {
-            console.log('Target ID', key)
+        deletePost(item) {
+            console.log('Target ID', item)
             // this.postIndex = 
             // console.log('This is the index', this.postIndex)
             // this.postId = post._id
@@ -161,5 +160,14 @@ export default {
 </script>
 
 <style scoped>
+.post-form{
+    border: 3px solid black;
+    border-radius: 10px;
+    margin: 5%;
+    padding: 2% 10%;
+}
 
+.posts{
+    padding-right: 5%;
+}
 </style>

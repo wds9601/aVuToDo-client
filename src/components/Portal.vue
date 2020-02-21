@@ -59,22 +59,26 @@ export default {
         // user = this.user
     ],
     created: function() {
+        this.clearToken()
         this.checkForToken()
-        console.log(this.user._id)
+        // console.log(this.user._id)
 
     },
     methods: {
-        // getToken({token, user}) {
-        //     this.token = token
-        //     this.user = user
-        //     console.log('getToken details', user, token)
-        // },
+        clearToken() {
+            let token = localStorage.getItem('userToken')
+            if (token) {
+                localStorage.removeItem('userToken')
+                this.token = ''
+            }
+            else {
+                return
+            }
+        },
         checkForToken() {
             let token = localStorage.getItem('userToken')
             console.log('This is the token at beginning of check function', token)
-            let decode = this.$jwt.decode(token)
-            console.log(decode)
-            if (!token || token === undefined) {
+            if (!token || token === undefined || token === null) {
                 localStorage.removeItem('userToken')
                 this.token = ''
                 this.user = null
@@ -92,8 +96,12 @@ export default {
                 // .catch(err => {
                 //     console.log('Error in verify POST', err)
                 // })
+                let decode = this.$jwt.decode(token)
+                console.log('This is the decoded token from Portal:', decode)
+
                 this.token = localStorage.getItem('userToken')
                 this.user = decode
+                console.log('Portal - looking to get user._id for router push', decode)
                 this.$router.push(`/profile/${this.user._id}`)
             }
         },
