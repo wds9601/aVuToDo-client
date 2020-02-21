@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-    <!-- <nav>
-      <router-link to="/">Landing Page |</router-link>
+    <!-- <nav v-if="user">
+      <router-link class="" to="/">Landing Page |</router-link>
       <router-link to="/portal"> Portal Page |</router-link>
-      <router-link to="/slideshow"> Slideshow |</router-link>
+      <router-link to="/profile"> My ToDos |</router-link>
+      <router-link to="/"> Logout</router-link>
     </nav> -->
     <router-view />
   </div>
@@ -15,46 +16,28 @@ export default {
   name: 'App',
   data() {
     return {
-      user: null,
+      user: '',
       token: ''
     }
   }, 
   props: [
     // "updateUser"
   ],
-  methods: {
-    updateUser({user}, token) {
-      this.user = {user}
-      this.token = token
-    }
-  }
-  // created: function() {
-  //   this.decodeToken()
+  // mounted() {
+  //   this.updateUser()
   // },
-  // methods: {
-  //   decodeToken(existingToken) {
-  //     let token = existingToken || localStorage.getItem('userToken')
-  //     if (token) {
-  //       let decoded = this.$jwtDec(token)
-
-  //       if (!decoded || Date.now() > decoded.exp * 1000) {
-  //         console.log('Expired or bad token')
-  //         this.user = null
-  //       }
-  //       else {
-  //         console.log('Yippeeee!')
-  //         this.user = decoded
-  //       }
-  //     }
-  //     else {
-  //       this.user = null
-  //     }
-
-  //   }
-  // }
-  // props: [
-  //   ""
-  // ]
+  methods: {
+    // updateUser() {
+    //   if (localStorage.length === 3) {
+    //   this.user = localStorage.getItem('userId')
+    //   this.token = localStorage.getItem('userToken')
+    //   }
+    //   else {
+    //     this.user = ''
+    //     this.token = ''
+    //   }
+    // }
+  }
 }
 </script>
 
@@ -65,6 +48,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  /* margin-top: 60px; */
+  margin-top: 5%;
 }
+
+/* nav {
+  background-color: rgba(0,0,0,0)
+} */
 </style>

@@ -83,7 +83,6 @@ export default {
             show: true
         }
     },
-    // props: [ "getToken" ],
     methods: {
         Signup(e) {
             e.preventDefault()
@@ -97,8 +96,7 @@ export default {
                 verifyPassword: this.form.verifyPassword
             }
 
-            console.log('This is newUser form object sent to auth:', newUser)
-            // // console.log('This is the URL', process.env.VUE_APP_SERVER_URL)
+            // console.log('This is newUser form object sent to auth:', newUser)
             this.axios.post(process.env.VUE_APP_SERVER_URL + '/auth/signup', newUser) 
             .then(response => {
                 localStorage.setItem('userToken', response.data.token)

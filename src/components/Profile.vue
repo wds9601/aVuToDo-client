@@ -8,6 +8,8 @@
                 is="post" 
                 v-for="p in posts" 
                 v-bind:key="p._id"
+                v-bind:id="p._id"
+                v-bind:author="p.author"
                 v-bind:title="p.title"
                 v-bind:content="p.content"
                 >
@@ -68,21 +70,21 @@ export default {
                 title: '',
                 content: ''
             },
-            postId: '',
-            postIndex: ''
         }
     },
-    props: {
-        // user: this.user
-    },
     mounted: function() {
-        this.getUserPosts()
+        this.getUserPosts(),
+        this.setUserId()
     },
     methods: {
+        setUserId() {
+            let user = this.$route.params.id
+            localStorage.setItem('userId', user)
+        },
         getUserPosts() {
-            console.log(localStorage)
+            // console.log(localStorage)
             let token = localStorage.getItem('userToken')
-            console.log('This is the token before axios GET /posts:', {token: token})
+            // console.log('This is the token before axios GET /posts:', {token: token})
             axios.get(`${process.env.VUE_APP_SERVER_URL}/posts`, {
                 headers: {
                     'Content-type': 'application/x-www-form-urlencoded',
@@ -90,7 +92,7 @@ export default {
                 }
             })
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 this.posts = response.data
             })
             .catch(err => {
@@ -121,8 +123,8 @@ export default {
             })
             this.getUserPosts()
         },
-        deletePost(item) {
-            console.log('Target ID', item)
+        deletePost(id) {
+            console.log('Target ID', id)
             // this.postIndex = 
             // console.log('This is the index', this.postIndex)
             // this.postId = post._id

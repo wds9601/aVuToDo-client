@@ -39,7 +39,6 @@ export default {
             }
         }
     },
-    // props: ["getToken"],
     methods: {
         Login(e) {
             e.preventDefault()

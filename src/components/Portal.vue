@@ -2,8 +2,6 @@
 <div>
     <div v-if="!user">
         <div class="image-container">
-            <!-- <h3>Login, Signup, and Slideshow links here.</h3>
-            <h4>Login and signup will be through modal?</h4> -->
             <hr/>
             <div v-if="noClicks === true" class="button-container">
                 <div v-if="login === false">
@@ -31,11 +29,7 @@
 </div>
 </template>
 
-// if !user, render login/signup buttons
-//if user, redirect to profile
-
 <script>
-// import axios from 'axios'
 
 import Signup from './Signup.vue'
 import Login from './Login.vue'
@@ -61,7 +55,6 @@ export default {
     created: function() {
         this.clearToken()
         this.checkForToken()
-        // console.log(this.user._id)
 
     },
     methods: {
@@ -84,18 +77,6 @@ export default {
                 this.user = null
             }
             else {
-                // var url = 'http://localhost:3000'
-                // axios.post(`${url}/auth/verify`,{ token })
-                // .then(result => {
-                //     console.log('This is the result from AXIOS POST VERIFY', result)
-                //     localStorage.setItem(result.token)
-                //     this.user = result.user
-                //     this.token = result.token
-                //     // this.getToken()
-                // })
-                // .catch(err => {
-                //     console.log('Error in verify POST', err)
-                // })
                 let decode = this.$jwt.decode(token)
                 console.log('This is the decoded token from Portal:', decode)
 
