@@ -3,7 +3,7 @@
         <h2>Sign up using the form below</h2>
         <br/>
         <div class="signup-form">
-            <b-form @submit="Signup" @reset="onReset" v-if="show">
+            <b-form autocomplete=off @submit="Signup" @reset="onReset" v-if="show">
                 <b-form-group id="input-group-1" label="Email:" label-for="email">
                     <b-form-input
                         id="email"
@@ -87,6 +87,7 @@ export default {
         Signup(e) {
             e.preventDefault()
 
+            // Shape the data for POST
             let newUser = {
                 email: this.form.email,
                 firstname: this.form.firstname,
@@ -97,12 +98,18 @@ export default {
             }
 
             // console.log('This is newUser form object sent to auth:', newUser)
+            
             this.axios.post(process.env.VUE_APP_SERVER_URL + '/auth/signup', newUser) 
             .then(response => {
+                // set localStorage token
                 localStorage.setItem('userToken', response.data.token)
+                // Decode the token for user data (used in redirect below)
                 let decode = this.$jwt.decode(response.data.token)
-                console.log('DECODED SIGNUP TOKEN:', decode)
-                console.log('SUCCESS in POST /auth/signup, response.data', response.data)
+
+                // console.log('DECODED SIGNUP TOKEN:', decode)
+                // console.log('SUCCESS in POST /auth/signup, response.data', response.data)
+
+                // Redirect to the users profile page
                 this.$router.push(`/profile/${decode._id}`)
             })
             .catch(err => {

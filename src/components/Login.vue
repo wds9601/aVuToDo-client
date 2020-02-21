@@ -3,7 +3,7 @@
         <h2>Log in below</h2>
         <br/>
         <div class="login-form">
-            <b-form @submit="Login">
+            <b-form autocomplete=off @submit="Login">
                 <b-form-group id="input-group-1" label="Email:" label-for="email">
                     <b-form-input
                         id="email"
@@ -43,21 +43,22 @@ export default {
         Login(e) {
             e.preventDefault()
 
+            // Shape the data
             let user = {
                 email: this.form.email,
                 password: this.form.password
             }
 
-            console.log('This is the user object being sent to /auth/login', user)
+            // 
+            // console.log('This is the user object being sent to /auth/login', user)
             // // console.log('This is the URL', process.env.VUE_APP_SERVER_URL)
             this.axios.post(`${process.env.VUE_APP_SERVER_URL}/auth/login`, user)
             .then(response => {
                 localStorage.setItem('userToken', response.data.token)
-                // this.getToken(response.data),
-                console.log('This is being sent to jwt-decode', response.data.token)
+                // console.log('This is being sent to jwt-decode', response.data.token)
                 let decode = this.$jwt.decode(response.data.token)
-                console.log('This is DECODE, from Login 59.  Looking to get decode._id for router', decode)
-                console.log('SUCCESS in POST /auth/login. this is response.data Login 58', response.data),
+                // console.log('This is DECODE, from Login 59.  Looking to get decode._id for router', decode)
+                // console.log('SUCCESS in POST /auth/login. this is response.data Login 58', response.data),
                 this.$router.push(`/profile/${decode._id}`)
             })
             .catch(err => {

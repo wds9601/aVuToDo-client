@@ -1,10 +1,9 @@
 
 import Landing from './components/Landing.vue'
 import Portal from './components/Portal.vue'
-
 import Profile from './components/Profile.vue'
 
-
+// Declare routes and necessary components to import
 const routes = [
     {
         path: '/', 

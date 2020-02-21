@@ -2,7 +2,7 @@
     <div class="post-display">
         <p class="title"><strong>{{ title }}</strong></p>
         <p class="content">{{ content }}</p>
-        <b-button variant="danger" v-on:click="deletePost(id)">Delete</b-button>
+        <b-button variant="warning" v-on:click="deletePost(id)">Done-zo</b-button>
     </div>
 </template>
 
@@ -11,6 +11,7 @@ import axios from 'axios'
 
 export default {
     name: "Post",
+    // Declare props from parent component
     props: {
         title: {
             type:String
@@ -29,8 +30,6 @@ export default {
     methods: {
         deletePost(id) {
             let token = localStorage.getItem('userToken')
-            // console.log('This is delete ID from Post compo', id)
-            // console.log('This is userToken from Post compo', token)
 
             axios.delete(`${process.env.VUE_APP_SERVER_URL}/posts/${id}`, {
                 headers: {
@@ -45,12 +44,6 @@ export default {
             .catch(err => {
                 console.log('Error in GET /posts:', err)
             })
-
-            // axios.delete(`${process.env.VUE_APP_SERVER_URL}/posts/${id}`)
-            // .then(
-            //     // this.$router.push(`/profile/${this.author}`)
-            // )
-            // .catch()
         }
     }
 }
@@ -65,6 +58,9 @@ export default {
     margin: 5%;
     padding: 2%;
     background-size: contain;
+    background-color: rgba(255,255,255,0.4);
+    background-size: contain;
+
 }
 
 .title{
