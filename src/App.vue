@@ -1,28 +1,60 @@
 <template>
   <div id="app">
-    <nav>
+    <!-- <nav>
       <router-link to="/">Landing Page |</router-link>
       <router-link to="/portal"> Portal Page |</router-link>
       <router-link to="/slideshow"> Slideshow |</router-link>
-    </nav>
-    
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <!-- <Landing /> -->
+    </nav> -->
     <router-view />
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
-// import Landing from './components/Landing.vue'
 
 export default {
   name: 'App',
-  components: {
-    // HelloWorld,
-    // Landing
+  data() {
+    return {
+      user: null,
+      token: ''
+    }
+  }, 
+  props: [
+    // "updateUser"
+  ],
+  methods: {
+    updateUser({user}, token) {
+      this.user = {user}
+      this.token = token
+    }
   }
+  // created: function() {
+  //   this.decodeToken()
+  // },
+  // methods: {
+  //   decodeToken(existingToken) {
+  //     let token = existingToken || localStorage.getItem('userToken')
+  //     if (token) {
+  //       let decoded = this.$jwtDec(token)
+
+  //       if (!decoded || Date.now() > decoded.exp * 1000) {
+  //         console.log('Expired or bad token')
+  //         this.user = null
+  //       }
+  //       else {
+  //         console.log('Yippeeee!')
+  //         this.user = decoded
+  //       }
+  //     }
+  //     else {
+  //       this.user = null
+  //     }
+
+  //   }
+  // }
+  // props: [
+  //   ""
+  // ]
 }
 </script>
 
@@ -33,6 +65,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /* margin-top: 60px; */
 }
 </style>

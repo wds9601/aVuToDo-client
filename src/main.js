@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
+import VueJWT from 'vuejs-jwt'
+// import VueJwtDecode from 'vue-jwt-decode'
 import VueRouter from 'vue-router'
 import VueAxios from 'vue-axios'
 import axios from 'axios'
@@ -11,6 +13,8 @@ import routes from './routes'
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
+Vue.use(VueJWT)
+// Vue.use(VueJwtDecode)
 Vue.use(VueRouter)
 Vue.use(VueAxios, axios)
 

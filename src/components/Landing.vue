@@ -1,8 +1,9 @@
 <template>
     <div>
-        <h1>This is the landing page</h1>
         <div class="image-container">
-            <button class="enter-btn">Enter</button>
+            <div class="enter-link">
+                <router-link  to="/portal">Enter</router-link>
+            </div>
         </div>
     </div>
 </template>
@@ -14,12 +15,17 @@ export default {
 </script>
 
 <style scoped>
-
 .image-container {
-    height: 90vh;
-    width: 99vw;
+    height: 100vh;
+    width: 100vw;
     background-color: #ff9944;
-    text-align: center;
+    padding-top: 180%;
 }
 
+.enter-link {
+    border: 3px solid black;
+    width: 60%;
+    margin-left: 20%;
+    padding: 5%;
+}
 </style>

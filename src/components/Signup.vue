@@ -3,7 +3,7 @@
         <h2>Sign up using the form below</h2>
         <br/>
         <div class="signup-form">
-            <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+            <b-form @submit="Signup" @reset="onReset" v-if="show">
                 <b-form-group id="input-group-1" label="Email:" label-for="email">
                     <b-form-input
                         id="email"
@@ -63,9 +63,6 @@
                 <b-button type="submit" variant="primary">Submit</b-button>
                 <b-button type="reset" variant="danger">Reset</b-button>
             </b-form>
-            <!-- <b-card class="mt-3" header="Form Data Result">
-                <pre class="m-0">{{ form }}</pre>
-            </b-card> -->
         </div>
     </div>
 </template>
@@ -86,9 +83,10 @@ export default {
             show: true
         }
     },
+    props: [ "getToken" ],
     methods: {
-        onSubmit(evt) {
-            evt.preventDefault()
+        Signup(e) {
+            e.preventDefault()
 
             let newUser = {
                 email: this.form.email,
@@ -98,16 +96,22 @@ export default {
                 password: this.form.password,
                 verifyPassword: this.form.verifyPassword
             }
-            console.log(newUser)
+
+            console.log('This is newUser object', newUser)
             // // console.log('This is the URL', process.env.VUE_APP_SERVER_URL)
-            this.axios.post(process.env.VUE_APP_SERVER_URL + '/auth/signup', newUser)
-            .then(response => (
-                console.log('SUCCESS in POST user creation', response)
-                // this.info = response
-            ))
+            this.axios.post(process.env.VUE_APP_SERVER_URL + '/auth/signup', newUser) 
+            .then(response => {
+                localStorage.setItem('userToken', response.data.token),
+                this.getToken(response.data),
+                console.log('SUCCESS in POST user creation', response.data),
+                this.$router.push('/profile')
+            })
             .catch(err => {
                 console.log('Error in POST user creation', err)
             })
+            
+                
+                
         },
         onReset(evt) {
             evt.preventDefault()
